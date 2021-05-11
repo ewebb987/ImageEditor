@@ -22,20 +22,13 @@ inputDirectory = dirname + "\\input"
 
 files = os.listdir(inputDirectory)
 for file in files:
-    fileName = str(file)
-    print("Processing - " + fileName)
+    print("Processing - " + file)
 
-    img1 = Image.open(dirname + "\\background.png")
-    _img1 = img1.convert("RGB")
+    backImage = Image.open(dirname + "\\background.png").convert("RGB")
+    mainImage = resizeImg(Image.open(inputDirectory + "\\" + file))
 
-    img2 = Image.open(inputDirectory + "\\" + fileName)
-    _img2 = resizeImg(img2)
+    newImage = backImage.copy()
+    newImage.paste(mainImage,(calcOffset(mainImage),0))
+    newImage.save(outputDirectory + "\\" + file)
 
-    backImage = _img1.copy()
-    backImage.paste(_img2,(calcOffset(_img2),0))
-    backImage.save(outputDirectory + "\\" + fileName)
-
-    print("Success - " + fileName)
-
-
-
+    print("Success - " + file)
